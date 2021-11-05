@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Xml;
 using System.Xml.Schema;
+using CadCoreLib.Properties;
 
 namespace CadCoreLib
 {
@@ -26,6 +27,9 @@ namespace CadCoreLib
 
         public static Document Open(string filename)
         {
+            if (string.IsNullOrEmpty(filename))
+                throw new System.ArgumentException(Resources.EmptyFileNameExceptionMsg);
+
             Document document = new Document();
             XmlReaderSettings settings = new XmlReaderSettings();
             XmlReader reader = XmlReader.Create(filename, settings);
@@ -37,6 +41,9 @@ namespace CadCoreLib
 
         public void Save(string filename)
         {
+            if (string.IsNullOrEmpty(filename))
+                throw new System.ArgumentException(Resources.EmptyFileNameExceptionMsg);
+
             XmlWriterSettings settings = new XmlWriterSettings();
             settings.Indent = true;
             XmlWriter writer = XmlWriter.Create(filename, settings);
@@ -47,8 +54,10 @@ namespace CadCoreLib
 
         public void Save()
         {
-            if (!string.IsNullOrEmpty(this.FileName))
-                Save(FileName);
+            if (string.IsNullOrEmpty(this.FileName))
+                throw new System.Exception(Resources.EmptyFileNameExceptionMsg);
+
+            Save(FileName);
         }
 
         public void Print(string printername)
