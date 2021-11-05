@@ -7,7 +7,7 @@ namespace CadCoreLib
 {
     public enum Formats { A4, A3, A2, A1, A0, A5 }
 
-    public class Sheet : CadObject
+    public class Sheet : CadObject, IDrawableCadObject
     {
         public List<View> Views { get; private set; }
 
@@ -116,6 +116,33 @@ namespace CadCoreLib
 
         public override void WriteXml(XmlWriter writer)
         {
+            writer.WriteStartElement("Sheet");
+
+            if (!string.IsNullOrEmpty(Name))
+                writer.WriteAttributeString("Name", Name);
+
+            if (Format != Formats.A4)
+                if (Multiplier > 1)
+                    writer.WriteAttributeString("Format", $"{Format}x{Multiplier}");
+                else
+                    writer.WriteAttributeString("Format", $"{Format}");
+
+            if (Landscape)
+                writer.WriteAttributeString("Landscape", Landscape.ToString());
+
+            if (!string.IsNullOrEmpty(Description))
+                writer.WriteElementString("Description", Description);
+
+            foreach (View vw in this.Views)
+                vw.WriteXml(writer);
+
+            writer.WriteEndElement();
+        }
+
+        public void Draw(Graphics g)
+        {
+            foreach (View vw in this.Views)
+                vw.Draw(g);
         }
     }
 }

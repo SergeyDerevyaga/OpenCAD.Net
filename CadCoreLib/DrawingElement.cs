@@ -6,7 +6,7 @@ using System.Xml.Schema;
 
 namespace CadCoreLib
 {
-    public abstract class DrawingElement : CadObject
+    public abstract class DrawingElement : CadObject, IDrawableCadObject
     {
         public abstract void Draw(Graphics g);
     }
@@ -29,6 +29,8 @@ namespace CadCoreLib
 
         public override void Draw(Graphics g)
         {
+            foreach (DrawingElement e in this.Elements)
+                e.Draw(g);
         }
 
         public override XmlSchema GetSchema()
@@ -42,6 +44,18 @@ namespace CadCoreLib
 
         public override void WriteXml(XmlWriter writer)
         {
+            writer.WriteStartElement("MacroElement");
+
+            if (!string.IsNullOrEmpty(Name))
+                writer.WriteAttributeString("Name", Name);
+
+            if (!string.IsNullOrEmpty(Description))
+                writer.WriteElementString("Description", Description);
+
+            foreach (DrawingElement e in this.Elements)
+                e.WriteXml(writer);
+
+            writer.WriteEndElement();
         }
     }
 }

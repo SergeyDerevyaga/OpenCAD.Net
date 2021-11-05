@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Drawing;
 using System.Xml;
 using System.Xml.Schema;
 using System.Xml.Serialization;
@@ -37,5 +38,10 @@ namespace CadCoreLib
         public override void WriteXml(XmlWriter writer)
         {
         }
+    }
+
+    public interface IDrawableCadObject
+    {
+        void Draw(Graphics g);
     }
 }

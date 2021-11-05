@@ -1,10 +1,11 @@
 ﻿using System.Collections.Generic;
+using System.Drawing;
 using System.Xml;
 using System.Xml.Schema;
 
 namespace CadCoreLib
 {
-    public class Layer : CadObject
+    public class Layer : CadObject, IDrawableCadObject
     {
         public List<DrawingElement> Elements { get; private set; }
 
@@ -24,6 +25,24 @@ namespace CadCoreLib
 
         public override void WriteXml(XmlWriter writer)
         {
+            writer.WriteStartElement("Layer");
+
+            if (!string.IsNullOrEmpty(Name))
+                writer.WriteAttributeString("Name", Name);
+
+            if (!string.IsNullOrEmpty(Description))
+                writer.WriteElementString("Description", Description);
+
+            foreach (DrawingElement e in this.Elements)
+                e.WriteXml(writer);
+
+            writer.WriteEndElement();
+        }
+
+        public void Draw(Graphics g)
+        {
+            foreach (DrawingElement e in this.Elements)
+                e.Draw(g);
         }
     }
 }
