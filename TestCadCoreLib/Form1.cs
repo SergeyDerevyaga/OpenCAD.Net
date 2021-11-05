@@ -13,6 +13,7 @@ namespace TestCadCoreLib
 {
     public partial class Form1 : Form
     {
+        public Document doc;
         public Form1()
         {
             InitializeComponent();
@@ -20,23 +21,14 @@ namespace TestCadCoreLib
 
         private void button1_Click(object sender, EventArgs e)
         {
-            Document doc = new Document();
+            doc = new Document();
             doc.Name = "Example 1";
             doc.Description = "This is an example of OpenCAD.Net Document";
+            propertyGrid1.SelectedObject = doc;
+        }
 
-            Sheet sh = new Sheet();
-            doc.Sheets.Add(sh);
-
-            sh = new Sheet();
-            sh.Format = Formats.A3;
-            sh.Multiplier = 3;
-            sh.Landscape = true;
-            doc.Sheets.Add(sh);
-
-            CadCoreLib.View vw = new CadCoreLib.View();
-            vw.Scale = 0.5f;
-            sh.Views.Add(vw);
-
+        private void button2_Click(object sender, EventArgs e)
+        {
             doc.Save("example.xml");
         }
     }

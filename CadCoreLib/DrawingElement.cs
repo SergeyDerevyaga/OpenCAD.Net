@@ -3,6 +3,7 @@ using System.Collections.ObjectModel;
 using System.Drawing;
 using System.Xml;
 using System.Xml.Schema;
+using CadCoreLib.Properties;
 
 namespace CadCoreLib
 {
@@ -24,6 +25,9 @@ namespace CadCoreLib
 
         public MacroElement(DrawingElement[] e)
         {
+            if (e.Length == 0)
+                throw new System.ArgumentException(Resources.EmptyMacroElementExceptionMsg);
+
             this.elements = new List<DrawingElement>(e);
         }
 

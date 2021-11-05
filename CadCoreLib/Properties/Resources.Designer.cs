@@ -68,5 +68,23 @@ namespace CadCoreLib.Properties {
                 return ResourceManager.GetString("EmptyFileNameExceptionMsg", resourceCulture);
             }
         }
+        
+        /// <summary>
+        ///   Ищет локализованную строку, похожую на Error! You cannot create a macro element from an empty set of drawing elements..
+        /// </summary>
+        public static string EmptyMacroElementExceptionMsg {
+            get {
+                return ResourceManager.GetString("EmptyMacroElementExceptionMsg", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Ищет локализованную строку, похожую на Error! The format multiplier must be equal to or greater than 1..
+        /// </summary>
+        public static string InvalidFormatMultiplierExceptionMsg {
+            get {
+                return ResourceManager.GetString("InvalidFormatMultiplierExceptionMsg", resourceCulture);
+            }
+        }
     }
 }

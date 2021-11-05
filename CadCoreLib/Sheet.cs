@@ -2,6 +2,7 @@
 using System.Drawing;
 using System.Xml;
 using System.Xml.Schema;
+using CadCoreLib.Properties;
 
 namespace CadCoreLib
 {
@@ -36,6 +37,9 @@ namespace CadCoreLib
 
             set
             {
+                if (value < 1)
+                    throw new System.ArgumentException(Resources.InvalidFormatMultiplierExceptionMsg);
+
                 multiplier = value;
                 CalcSize();
             }

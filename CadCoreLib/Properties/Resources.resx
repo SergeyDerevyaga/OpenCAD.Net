@@ -120,4 +120,10 @@
   <data name="EmptyFileNameExceptionMsg" xml:space="preserve">
     <value>Error! The file name cannot be an empty string.</value>
   </data>
+  <data name="EmptyMacroElementExceptionMsg" xml:space="preserve">
+    <value>Error! You cannot create a macro element from an empty set of drawing elements.</value>
+  </data>
+  <data name="InvalidFormatMultiplierExceptionMsg" xml:space="preserve">
+    <value>Error! The format multiplier must be equal to or greater than 1.</value>
+  </data>
 </root>
