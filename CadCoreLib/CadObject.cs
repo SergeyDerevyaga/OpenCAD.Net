@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.ComponentModel;
 using System.Drawing;
 using System.Xml;
 using System.Xml.Schema;
@@ -19,7 +20,8 @@ namespace CadCoreLib
 
     public class CadObjectAttribute : CadObject
     {
-        public SortedList<string, string> KeyValuePairs { get; private set; }
+        [EditorAttribute(typeof(SortedListTypeEditor<string, string>), typeof(System.Drawing.Design.UITypeEditor))]
+        public SortedList<string, string> KeyValuePairs { get; set; }
 
         public CadObjectAttribute()
         {
@@ -37,6 +39,23 @@ namespace CadCoreLib
 
         public override void WriteXml(XmlWriter writer)
         {
+            writer.WriteStartElement("Attribute");
+
+            if (!string.IsNullOrEmpty(Name))
+                writer.WriteAttributeString("Name", Name);
+
+            if (!string.IsNullOrEmpty(Description))
+                writer.WriteElementString("Description", Description);
+
+            foreach (KeyValuePair<string, string> kvp in this.KeyValuePairs)
+            {
+                writer.WriteStartElement("Parameter");
+                writer.WriteAttributeString("Name", kvp.Key);
+                writer.WriteString(kvp.Value);
+                writer.WriteEndElement();
+            }
+
+            writer.WriteEndElement();
         }
     }
 
